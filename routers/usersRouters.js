@@ -7,4 +7,4 @@ const usersRouters = express.Router();
 // usersRouters.get("/users/:id", );
 // usersRouters.get("/users/ranking", );
 
-export default usersRouters; 
+export default usersRouters;
