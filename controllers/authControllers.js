@@ -1,8 +1,5 @@
-import bcrypt from "bcrypt";
 
 import connectionSQL from "../dbSQL.js";
-
-
 
 export async function signUp(req, res){
     const { name, email, password } = req.body;
@@ -22,8 +19,10 @@ export async function signUp(req, res){
 
 export async function signIn(req, res){
     const {email, password} = req.body;
-     
-    bcrypt.compareSync(password, user.password)
-
+    try{
+        
+    } catch(e){
+        
+    }
 
 };
