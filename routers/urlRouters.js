@@ -4,7 +4,7 @@ import express from "express";
 
 const urlRouters = express.Router();
 
-urlRouters.post();
+// urlRouters.post();
 // urlRouters.get();
 // urlRouters.get();
 // urlRouters.delete();
