@@ -1,10 +1,11 @@
 import express from "express";
 
-//import controllers;
+import { postUrl } from "../controllers/urlControllers.js";
+import { authMiddlewares } from "../middlewares/authMiddleware.js";
 
 const urlRouters = express.Router();
 
-// urlRouters.post();
+urlRouters.post("/urls/shorten", authMiddlewares, postUrl);
 // urlRouters.get();
 // urlRouters.get();
 // urlRouters.delete();

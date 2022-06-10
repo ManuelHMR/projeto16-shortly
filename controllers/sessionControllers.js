@@ -1,5 +1,6 @@
 import jwt from "jsonwebtoken";
-import dotenv, { config } from "dotenv";
+import bcrypt from "bcrypt";
+import dotenv from "dotenv";
 dotenv.config();
 
 import connectionSQL from "../dbSQL.js";
