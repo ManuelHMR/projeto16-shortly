@@ -46,3 +46,17 @@ export async function openUrl (req, res){
         res.send(e)
     }
 };
+
+export async function deleteUrl(req, res){
+    let { id } = req.params;
+    try{
+        await connectionSQL.query(`
+            DELETE 
+            FROM urls
+            WHERE id = $1 
+        `, [id]);
+        res.sendStatus(204);
+    } catch (e){
+        res.send(e)      
+    };
+};

@@ -32,3 +32,25 @@ export async function shortUrlMiddleware(req, res, next){
         res.send(e);
     };
 }
+
+export async function checkId (req, res, next){
+    const { id } = req.params;
+    const {userId} = res.locals;
+    try {
+        const data = await connectionSQL.query(`
+            SELECT *
+            FROM urls
+            WHERE id = $1
+        `, [id])
+        const { rows } = data;
+        if(rows.length === 0){
+            return res.sendStatus(404);
+        };
+        if(rows[0].userId != userId){
+            return res.sendStatus(401);
+        };
+        next();
+    }catch(e){
+        res.send(e);
+    };
+};
