@@ -18,7 +18,7 @@ export async function postUrl (req, res){
     }
 };
 
-export async function getUrlById(req,res){
+export async function getUrlById (req,res){
     const { id } = req.params;
     try{
         const data = await connectionSQL.query(`
@@ -30,4 +30,19 @@ export async function getUrlById(req,res){
     }catch (e){
         res.status(404).send(e);
     }
-}
+};
+
+export async function openUrl (req, res){
+    const {id, visits, url} = res.locals.data;
+    const views = Number(visits) + 1;
+    try{
+        await connectionSQL.query(`
+            UPDATE urls
+            SET visits = $1
+            WHERE id = $2
+        `, [views, id]);
+        res.redirect(url)
+    }catch(e){
+        res.send(e)
+    }
+};

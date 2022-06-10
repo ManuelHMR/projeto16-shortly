@@ -1,7 +1,8 @@
 import joi from "joi";
+import connectionSQL from "../dbSQL.js";
 
 const urlSchema = joi.object({
-    url: joi.string().required()
+    url: joi.string().uri().trim().required()
 });
 
 export async function urlValidation (req, res, next){
@@ -12,3 +13,22 @@ export async function urlValidation (req, res, next){
     };
     next();
 };
+
+export async function shortUrlMiddleware(req, res, next){
+    const { shortUrl } = req.params;
+    try {
+        const data = await connectionSQL.query(`
+            SELECT * 
+            FROM urls
+            WHERE "shortUrl" = $1; 
+        `, [shortUrl]);
+        const {rows} = data;
+        if( rows.length === 0 ) {
+            return res.sendStatus(404);
+        };
+        res.locals.data = rows[0];
+        next();
+    } catch (e) {
+        res.send(e);
+    };
+}
