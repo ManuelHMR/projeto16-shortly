@@ -16,3 +16,25 @@ export async function getUser(req, res){
         res.send(e);
     };
 };
+
+export async function getRanking (req, res){
+    try {
+        const query = await connectionSQL.query(`
+            SELECT 
+                users."id", 
+                users.username, 
+                COUNT(urls."userId") as "linksCount", 
+                COALESCE(SUM(urls.visits),0) as "visitCount"
+            FROM users
+            LEFT JOIN urls ON users."id" = urls."userId"
+            GROUP BY users."id"
+            ORDER BY "visitCount" DESC, "linksCount" DESC
+            LIMIT 10;
+        `);
+        const ranking = query.rows;
+        res.status(200).send(ranking);
+    } catch (error) {
+        res.send('Não foi possível conectar ao Banco');
+        console.log(error);
+    }
+};

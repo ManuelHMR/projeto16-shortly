@@ -2,7 +2,6 @@ import connectionSQL from "../dbSQL.js";
 import { nanoid } from "nanoid";
 
 export async function postUrl (req, res){
-    console.log("Passou do middleware")
     const userId = res.locals.userId;
     const { url } = req.body;
     const shortUrl = nanoid(8);

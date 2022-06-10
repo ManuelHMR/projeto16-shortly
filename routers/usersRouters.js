@@ -1,12 +1,12 @@
 import express from "express";
 
-import { getUser} from "./../controllers/usersControllers.js";
+import { getUser, getRanking } from "./../controllers/usersControllers.js";
 import { authMiddlewares } from "../middlewares/authMiddleware.js";
 import { userMiddleware } from "./../middlewares/userMiddlewares.js";
 
 const usersRouters = express.Router();
 
 usersRouters.get("/users/:id", authMiddlewares, userMiddleware, getUser);
-// usersRouters.get("/users/ranking", );
+usersRouters.get("/ranking", getRanking);
 
 export default usersRouters;
