@@ -39,11 +39,13 @@ export async function signInVerification (req, res, next){
             SELECT *
             FROM users
             WHERE email = $1
-        `, [email])
+        `, [email]);
         const dataVerification = bcrypt.compareSync(password, userData.rows[0].password);
         if(!dataVerification){
             return res.sendStatus(401);
         }
+        delete userData.rows[0].password;
+        res.locals.user = userData.rows[0];
     }catch (e){
         res.send(e)
     }

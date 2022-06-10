@@ -1,3 +1,6 @@
+import jwt from "jsonwebtoken";
+import dotenv, { config } from "dotenv";
+dotenv.config();
 
 import connectionSQL from "../dbSQL.js";
 
@@ -18,11 +21,8 @@ export async function signUp(req, res){
 };
 
 export async function signIn(req, res){
-    const {email, password} = req.body;
-    try{
-        
-    } catch(e){
-        
-    }
-
+    const { id } = res.locals.user;
+    const key = process.env.TOKEN_KEY;
+    const token = jwt.sign(id, key);
+    res.status(200).send(token);
 };
