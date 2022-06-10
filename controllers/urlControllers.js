@@ -17,3 +17,17 @@ export async function postUrl (req, res){
         res.send(e)
     }
 };
+
+export async function getUrlById(req,res){
+    const { id } = req.params;
+    try{
+        const data = await connectionSQL.query(`
+            SELECT urls.id, urls."shortUrl", urls.url
+            FROM urls
+            WHERE urls.id = $1
+        `, [id]);
+        res.status(200).send(data.rows[0])
+    }catch (e){
+        res.status(404).send(e);
+    }
+}
