@@ -40,9 +40,14 @@ export async function signInVerification (req, res, next){
             FROM users
             WHERE email = $1
         `, [email]);
+        if(userData.rowCount === 0 ){
+            const message = "usuario ou senha incorretas";
+            return res.status(401).send({message});
+        }
         const dataVerification = bcrypt.compareSync(password, userData.rows[0].password);
         if(!dataVerification){
-            return res.sendStatus(401);
+            const message = "usuario ou senha incorretas";
+            return res.status(401).send({message});
         }
         delete userData.rows[0].password;
         res.locals.user = userData.rows[0];
